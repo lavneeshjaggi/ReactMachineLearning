@@ -5,6 +5,20 @@ import * as tfvis from '@tensorflow/tfjs-vis';
 import './tensorflow.scss';
 
 class Tensorflow extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            dat: null,
+            val: null,
+            mod: null
+        }
+
+        this.run = this.run.bind(this);
+        this.create = this.create.bind(this);
+        this.convert = this.convert.bind(this);
+    }
+    
     // 1. LOAD, FORMAT AND VISUALISE THE INPUT DATA
     async run() {
         // Get the car data reduced to just the variables we are interested and cleaned of missing data.
@@ -26,6 +40,9 @@ class Tensorflow extends React.Component {
           x: d.horsepower,
           y: d.mpg,
         }));
+
+        this.setState({ dat: data });
+        this.setState({ val: values });
       
         tfvis.render.scatterplot(
           {name: 'Horsepower v MPG'},
@@ -56,6 +73,8 @@ class Tensorflow extends React.Component {
         // Create the model
         const model = createModel();
         tfvis.show.modelSummary({name: 'Model Summary'}, model);
+
+        this.setState({ mod: model });
     }  
     
     // 3. PREPARE THE DATA FOR TRAINING
@@ -69,39 +88,44 @@ class Tensorflow extends React.Component {
         function convertToTensor(data) {
             // Wrapping these calculations in a tidy will dispose any
             // intermediate tensors.
-        
+
             return tf.tidy(() => {
-            // Step 1. Shuffle the data
-            tf.util.shuffle(data);
-        
-            // Step 2. Convert data to Tensor
-            const inputs = data.map(d => d.horsepower)
-            const labels = data.map(d => d.mpg);
-        
-            const inputTensor = tf.tensor2d(inputs, [inputs.length, 1]);
-            const labelTensor = tf.tensor2d(labels, [labels.length, 1]);
-        
-            //Step 3. Normalize the data to the range 0 - 1 using min-max scaling
-            const inputMax = inputTensor.max();
-            const inputMin = inputTensor.min();
-            const labelMax = labelTensor.max();
-            const labelMin = labelTensor.min();
-        
-            const normalizedInputs = inputTensor.sub(inputMin).div(inputMax.sub(inputMin));
-            const normalizedLabels = labelTensor.sub(labelMin).div(labelMax.sub(labelMin));
-        
-            return {
-                inputs: normalizedInputs,
-                labels: normalizedLabels,
-                // Return the min/max bounds so we can use them later.
-                inputMax,
-                inputMin,
-                labelMax,
-                labelMin,
-            }
+                // Step 1. Shuffle the data
+                tf.util.shuffle(data);
+            
+                // Step 2. Convert data to Tensor
+                const inputs = data.map(d => d.horsepower)
+                const labels = data.map(d => d.mpg);
+            
+                const inputTensor = tf.tensor2d(inputs, [inputs.length, 1]);
+                const labelTensor = tf.tensor2d(labels, [labels.length, 1]);
+            
+                //Step 3. Normalize the data to the range 0 - 1 using min-max scaling
+                const inputMax = inputTensor.max();
+                const inputMin = inputTensor.min();
+                const labelMax = labelTensor.max();
+                const labelMin = labelTensor.min();
+            
+                const normalizedInputs = inputTensor.sub(inputMin).div(inputMax.sub(inputMin));
+                const normalizedLabels = labelTensor.sub(labelMin).div(labelMax.sub(labelMin));
+            
+                return {
+                    inputs: normalizedInputs,
+                    labels: normalizedLabels,
+                    // Return the min/max bounds so we can use them later.
+                    inputMax,
+                    inputMin,
+                    labelMax,
+                    labelMin,
+                }
             });
         }
+
+        convertToTensor(this.state.dat);
     }
+
+    // 4. TRAIN THE MODEL
+
 
     render() {
         return (
