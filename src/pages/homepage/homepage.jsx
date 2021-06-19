@@ -11,8 +11,8 @@ const Homepage = () => (
         <Link className="sections selectSections" to="/handwriting">
             <h1 className="name">Handwriting Predictor</h1>
         </Link>
-        <Link className="sections" to="/handwriting">
-            <h1 className="name">Random Predictor</h1>
+        <Link className="sections" to="/baseball">
+            <h1 className="name">Baseball Pitch Predictor</h1>
         </Link>
     </div>
 );
