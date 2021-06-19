@@ -26,7 +26,7 @@ export async function prepareTheModel() {
 export function makePrediction(userInput) {
     var { inputMin, inputMax, labelMin, labelMax } = tensorData;
 
-    if(userInput < 20) 
+    if(userInput < 20 || userInput > 400) 
         return 0;
 
     const num = (userInput - inputMin.dataSync()) / (inputMax.dataSync() - inputMin.dataSync());
