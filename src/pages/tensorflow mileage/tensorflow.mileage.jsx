@@ -2,11 +2,9 @@ import React , { Suspense } from 'react';
 
 import { makePrediction, prepareTheModel } from './tensorflow.mileage.function';
 
-import Spinner from '../../components/spinner/spinner.component.jsx';
-
 import './tensorflow.mileage.styles.scss';
 
-class Tensorflow extends React.Component {    
+class TensorflowMileage extends React.Component {    
   constructor() {
     super();
 
@@ -34,18 +32,16 @@ class Tensorflow extends React.Component {
 
   render() {
       return (
-        <Suspense fallback={<Spinner />}>
-          <div className='tensorflow'>
-              <h1>Predict Miles Per Gallon From Horsepower</h1>
-              <form className="form" onSubmit={this.handleSubmit}>
-                <input className="input" name="number" type="number" placeholder="Horsepower" value={this.state.number} onChange={this.handleChange} />
-                <button className="button" type="submit">Enter</button>
-              </form>
-              <h1 className="prediction">Miles per Gallon: {this.state.answer}</h1>
-          </div>
-        </Suspense>
+        <div className='tensorflowmileage'>
+            <h1>Predict Miles Per Gallon From Horsepower</h1>
+            <form className="form" onSubmit={this.handleSubmit}>
+              <input className="input" name="number" type="number" placeholder="Horsepower" value={this.state.number} onChange={this.handleChange} />
+              <button className="button" type="submit">Enter</button>
+            </form>
+            <h1 className="prediction">Miles per Gallon: {this.state.answer}</h1>
+        </div>
       )
   }
 };
 
-export default Tensorflow;
+export default TensorflowMileage;
