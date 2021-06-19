@@ -1,5 +1,6 @@
 * {
   margin: 0;
+  padding: 0;
 }
 
 body {
@@ -10,4 +11,8 @@ body {
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   text-align: center;
+}
+
+a:link { 
+  text-decoration: none; 
 }

@@ -1,0 +1,30 @@
+.homepage {
+    display: flex;
+    flex-direction: row;
+
+    .selectSections {
+        border-right: 1px solid #000000;
+    }
+
+    .sections {
+        align-items: center;
+        background: -webkit-linear-gradient(360deg, #8e7a3f 10%, #b09a51 360%); 
+        background: -o-linear-gradient(360deg, #8e7a3f 10%, #b09a51 360%);
+        background: linear-gradient(360deg, #8e7a3f 10%, #b09a51 360%); 
+        display: flex;
+        height: 99.7vh;
+        justify-content: center;
+        width: 33.2vw;        
+
+        .name {
+            color: #f5d020;
+            text-transform: uppercase;
+        }
+    }
+
+    .sections:hover {
+        background: #0F2027;  
+        background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  
+        background: linear-gradient(to right, #2C5364, #203A43, #0F2027); 
+    }
+}

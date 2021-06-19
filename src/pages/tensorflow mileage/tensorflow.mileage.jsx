@@ -1,4 +1,4 @@
-import React , { Suspense } from 'react';
+import React from 'react';
 
 import { makePrediction, prepareTheModel } from './tensorflow.mileage.function';
 import Spinner from '../../components/spinner/spinner.component';
