@@ -1,4 +1,4 @@
-import Tensorflow from './tensorflow/tensorflow';
+import Tensorflow from './pages/tensorflow mileage/tensorflow.mileage';
 
 import './App.scss';
 
