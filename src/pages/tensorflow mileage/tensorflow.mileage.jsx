@@ -2,7 +2,7 @@ import React , { Suspense } from 'react';
 
 import { makePrediction, prepareTheModel } from './tensorflow.mileage.function';
 
-import Spinner from '../../components/spinner/spinner.component';
+import Spinner from '../../components/spinner/spinner.component.jsx';
 
 import './tensorflow.mileage.styles.scss';
 
