@@ -1,8 +1,10 @@
-import React from 'react';
+import React , { Suspense } from 'react';
 
 import { makePrediction, prepareTheModel } from './tensorflow.mileage.function';
 
-import './tensorflow.mileage.scss';
+import Spinner from '../../components/spinner/spinner.component';
+
+import './tensorflow.mileage.styles.scss';
 
 class Tensorflow extends React.Component {    
   constructor() {
@@ -32,6 +34,7 @@ class Tensorflow extends React.Component {
 
   render() {
       return (
+        <Suspense fallback={<Spinner />}>
           <div className='tensorflow'>
               <h1>Predict Miles Per Gallon From Horsepower</h1>
               <form className="form" onSubmit={this.handleSubmit}>
@@ -40,6 +43,7 @@ class Tensorflow extends React.Component {
               </form>
               <h1 className="prediction">Miles per Gallon: {this.state.answer}</h1>
           </div>
+        </Suspense>
       )
   }
 };
