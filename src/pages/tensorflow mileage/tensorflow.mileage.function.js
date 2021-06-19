@@ -20,7 +20,6 @@ export async function prepareTheModel() {
 
     // Train the model
     await trainModel(model, inputs, labels);
-    alert('Done Training');
 }
 
 // Function to help user make predictions on custom data
@@ -30,9 +29,7 @@ export function makePrediction(userInput) {
     if(userInput < 20) 
         return 0;
 
-    const val = userInput;
-
-    const num = (val - inputMin.dataSync()) / (inputMax.dataSync() - inputMin.dataSync());
+    const num = (userInput - inputMin.dataSync()) / (inputMax.dataSync() - inputMin.dataSync());
 
     const preds = model.predict(tf.tensor2d([num], [1, 1]));
 

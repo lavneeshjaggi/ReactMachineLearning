@@ -1,9 +1,14 @@
 .spinner-overlay {
     align-items: center;
     display: flex;
+    flex-direction: column;
     height: 60vh;
     justify-content: center;
     width: 100%;
+
+    .heading {
+      margin-bottom: 9vh;
+    }
   
     .spinner-container {
       animation: spin 1s ease-in-out infinite;
