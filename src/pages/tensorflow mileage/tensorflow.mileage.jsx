@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { makePrediction, prepareTheModel } from './tensorflow.mileage.function';
+import { prepareTheModel, makePrediction,  } from './tensorflow.mileage.function';
 import Spinner from '../../components/spinner/spinner.component';
 
 import './tensorflow.mileage.styles.scss';
