@@ -1,22 +1,19 @@
 import * as tf from '@tensorflow/tfjs';
 
-var data;
 var model;
 var tensorData;
-var inputs;
-var labels;
 
 export async function prepareTheModel() {
     // Load and plot the original input data that we are going to train on.
-    data = await getData();
+    const data = await getData();
 
     // Create the model
     model = createModel();
 
     // Convert the data to a form we can use for training.
     tensorData = convertToTensor(data);
-    inputs = tensorData.inputs;
-    labels = tensorData.labels;
+    const inputs = tensorData.inputs;
+    const labels = tensorData.labels;
 
     // Train the model
     await trainModel(model, inputs, labels);
