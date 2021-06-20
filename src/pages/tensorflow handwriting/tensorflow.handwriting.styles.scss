@@ -3,19 +3,46 @@
     display: flex;
     flex-direction: column;
     margin: auto;
-        
-    .button {
-        background-color: #20BF55;
-        border: none;
-        border-radius: 3rem;
-        height: 9vh;
-        margin-top: 30px;
-        width: 15vh;
+
+    .prediction {
+        margin-top: 12vh;
     }
 
-    .button:hover {
-        background-color: #f5d020;
-        border: none;
-        border-radius: 3rem;
+    .image {
+        margin-top: 12vh;
+        height: 25vh;
+        width: 25vw;
+    }
+
+    .form {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-top: 6vh;
+
+        .input {
+            font-family:Helvetica, Arial, sans-serif;
+            font-size:20pt;
+            line-height:2.6em;
+            height:2.6em;
+            margin:0;
+            padding:0;
+            width:100%;
+        }
+        
+        .button {
+            background-color: #20BF55;
+            border: none;
+            border-radius: 3rem;
+            height: 9vh;
+            margin-top: 30px;
+            width: 15vh;
+        }
+    
+        .button:hover {
+            background-color: #f5d020;
+            border: none;
+            border-radius: 3rem;
+        }
     }
 }
