@@ -19,6 +19,13 @@
         .name {
             color: #f5d020;
             text-transform: uppercase;
+            font-size: larger;
+        }
+
+        @media screen and (max-width: 568px){
+            .name {
+                font-size: 1rem;
+            }
         }
     }
 
