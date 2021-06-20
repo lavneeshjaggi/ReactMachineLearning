@@ -4,7 +4,7 @@ import "./spinner.styles.scss";
 
 const Spinner = () => (
   <div className="spinner-overlay">
-    <h1 className="heading">The model is getting trained</h1>
+    <h1 className="heading">Getting The Model Ready For Predictions</h1>
     <div className="spinner-container" />
   </div>
 );
