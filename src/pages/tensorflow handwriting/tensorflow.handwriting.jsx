@@ -18,12 +18,18 @@ class TensorflowHandwriting extends React.Component {
         }
 
         async function createModel() {
-            const model = getModel();
+            model = getModel();
             tfvis.show.modelSummary({name: 'Model Architecture', tab: 'Model'}, model);
             
             await train(model, data);
 
             alert("Done Training!");
+        }
+
+        async function evaluateModel() {
+          await showAccuracy(model, data);
+
+          await showConfusion(model, data);
         }
 
         // 1. LOAD THE DATA
@@ -155,11 +161,45 @@ class TensorflowHandwriting extends React.Component {
             });
         } 
 
+        // 4. EVALUATE OUR MODEL
+        const classNames = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+
+        function doPrediction(model, data, testDataSize = 500) {
+          const IMAGE_WIDTH = 28;
+          const IMAGE_HEIGHT = 28;
+          const testData = data.nextTestBatch(testDataSize);
+          const testxs = testData.xs.reshape([testDataSize, IMAGE_WIDTH, IMAGE_HEIGHT, 1]);
+          const labels = testData.labels.argMax(-1);
+          const preds = model.predict(testxs).argMax(-1);
+
+          testxs.dispose();
+          return [preds, labels];
+        }
+
+        async function showAccuracy(model, data) {
+          const [preds, labels] = doPrediction(model, data);
+          const classAccuracy = await tfvis.metrics.perClassAccuracy(labels, preds);
+          const container = {name: 'Accuracy', tab: 'Evaluation'};
+          tfvis.show.perClassAccuracy(container, classAccuracy, classNames);
+
+          labels.dispose();
+        }
+
+        async function showConfusion(model, data) {
+          const [preds, labels] = doPrediction(model, data);
+          const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
+          const container = {name: 'Confusion Matrix', tab: 'Evaluation'};
+          tfvis.render.confusionMatrix(container, {values: confusionMatrix, tickLabels: classNames});
+
+          labels.dispose();
+        }
+
         return (
             <div className="tensorflowhandwriting">
                 <h1>Tensorflow Handwriting</h1>
                 <button className="button" onClick={visualise}>Load Data</button>
                 <button className="button" onClick={createModel}>Create and Train Model</button>
+                <button className="button" onClick={evaluateModel}>Evaluate the Model</button>
             </div>
         )
     }
