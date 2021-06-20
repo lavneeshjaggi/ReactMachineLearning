@@ -51,7 +51,7 @@ class TensorflowMileage extends React.Component {
               value={this.state.number} 
               onChange={this.handleChange} 
             />
-            <button className="button" type="submit">Enter</button>
+            <button className="button" type="submit"><h3>Enter</h3></button>
           </form>
           <h1 className="prediction">Miles per Gallon: {this.state.answer}</h1>
       </div>
