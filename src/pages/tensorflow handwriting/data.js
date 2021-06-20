@@ -66,7 +66,7 @@ export class MnistData {
     });
 
     const labelsRequest = fetch(MNIST_LABELS_PATH);
-    const [imgResponse, labelsResponse] =
+    const [labelsResponse] =
         await Promise.all([imgRequest, labelsRequest]);
 
     this.datasetLabels = new Uint8Array(await labelsResponse.arrayBuffer());
