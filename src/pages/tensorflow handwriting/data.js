@@ -120,9 +120,9 @@ export class MnistData {
                 batchLabelsArray.set(label, i * NUM_CLASSES);
         }
 
-            const xs = tf.tensor2d(batchImagesArray, [batchSize, IMAGE_SIZE]);
-            const labels = tf.tensor2d(batchLabelsArray, [batchSize, NUM_CLASSES]);
+        const xs = tf.tensor2d(batchImagesArray, [batchSize, IMAGE_SIZE]);
+        const labels = tf.tensor2d(batchLabelsArray, [batchSize, NUM_CLASSES]);
 
-            return {xs, labels};
+        return {xs, labels};
     }
 }
