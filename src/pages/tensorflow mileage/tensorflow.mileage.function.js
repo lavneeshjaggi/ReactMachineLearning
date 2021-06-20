@@ -57,7 +57,7 @@ function createModel() {
     // Create a sequential model
     const model = tf.sequential();
 
-    // Add a input layer
+    // Add an input layer
     model.add(tf.layers.dense({inputShape: [1], units: 64, useBias: true}));
 
     model.add(tf.layers.dense({units: 32, activation: 'sigmoid'}));
