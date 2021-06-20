@@ -8,10 +8,22 @@ import './tensorflow.handwriting.styles.scss';
 
 class TensorflowHandwriting extends React.Component {
     render() {
-        async function run() {  
-            const data = new MnistData();
+        var data;
+        var model;
+
+        async function visualise() {  
+            data = new MnistData();
             await data.load();
             await showExamples(data);
+        }
+
+        async function createModel() {
+            const model = getModel();
+            tfvis.show.modelSummary({name: 'Model Architecture', tab: 'Model'}, model);
+            
+            await train(model, data);
+
+            alert("Done Training!");
         }
 
         // 1. LOAD THE DATA
@@ -106,10 +118,48 @@ class TensorflowHandwriting extends React.Component {
             return model;
         }
 
+        // 3. TRAIN THE MODEL
+        async function train(model, data) {
+            const metrics = ['loss', 'val_loss', 'acc', 'val_acc'];
+            const container = {
+              name: 'Model Training', tab: 'Model', styles: { height: '1000px' }
+            };
+            const fitCallbacks = tfvis.show.fitCallbacks(container, metrics);
+            
+            const BATCH_SIZE = 512;
+            const TRAIN_DATA_SIZE = 5500;
+            const TEST_DATA_SIZE = 1000;
+          
+            const [trainXs, trainYs] = tf.tidy(() => {
+              const d = data.nextTrainBatch(TRAIN_DATA_SIZE);
+              return [
+                d.xs.reshape([TRAIN_DATA_SIZE, 28, 28, 1]),
+                d.labels
+              ];
+            });
+          
+            const [testXs, testYs] = tf.tidy(() => {
+              const d = data.nextTestBatch(TEST_DATA_SIZE);
+              return [
+                d.xs.reshape([TEST_DATA_SIZE, 28, 28, 1]),
+                d.labels
+              ];
+            });
+          
+            return model.fit(trainXs, trainYs, {
+              batchSize: BATCH_SIZE,
+              validationData: [testXs, testYs],
+              epochs: 10,
+              shuffle: true,
+              callbacks: fitCallbacks
+            });
+        } 
+
         return (
             <div className="tensorflowhandwriting">
                 <h1>Tensorflow Handwriting</h1>
-                <button className="button" onClick={run}>Load Data</button>
+                <button className="button" onClick={visualise}>Load Data</button>
+                <button className="button" onClick={createModel}>Create and Train Model</button>
             </div>
         )
     }
