@@ -70,6 +70,7 @@ export class MnistData {
         await Promise.all([imgRequest, labelsRequest]);
 
     this.datasetLabels = new Uint8Array(await labelsResponse.arrayBuffer());
+    this.datasetimg = new Uint8Array(await imgResponse);
 
     // Create shuffled indices into the train/test set for when we select a
     // random dataset element for training / validation.
