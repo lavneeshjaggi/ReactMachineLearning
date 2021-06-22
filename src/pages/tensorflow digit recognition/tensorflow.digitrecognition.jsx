@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { prepareTheModel, doPrediction } from './tensorflow.handwriting.functions';
+import { prepareTheModel, doPrediction } from './tensorflow.digitrecognition.functions';
 import Spinner from '../../components/spinner/spinner.component';
 
-import './tensorflow.handwriting.styles.scss';
+import './tensorflow.digitrecognition.styles.scss';
 
 class TensorflowHandwriting extends React.Component {
   constructor() {

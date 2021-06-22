@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Homepage from './pages/homepage/homepage.jsx';
 import Spinner from './components/spinner/spinner.component.jsx';
 import TensorflowMileage from './pages/tensorflow mileage/tensorflow.mileage.jsx';
-import TensorflowHandwriting from './pages/tensorflow handwriting/tensorflow.handwriting.jsx';
+import TensorflowHandwriting from './pages/tensorflow digit recognition/tensorflow.digitrecognition.jsx';
 import TensorflowBaseball from './pages/tensorflow baseball/tensorflow.baseball.jsx';
 
 import './App.scss';
