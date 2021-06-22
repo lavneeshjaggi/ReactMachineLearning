@@ -2,10 +2,11 @@ import * as tf from '@tensorflow/tfjs';
 
 import {MnistData} from './data.js';
 
+var data;
 var model;
 
 export async function prepareTheModel() {  
-    const data = new MnistData();
+    data = new MnistData();
     await data.load();
 
     model = getModel();
@@ -52,7 +53,7 @@ function getModel() {
     // it for input into our last layer. This is common practice when feeding
     // higher dimensional data to a final classification output layer.
     model.add(tf.layers.flatten());
-    
+
     // Our last layer is a dense layer which has 10 output units, one for each
     // output class (i.e. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9).
     const NUM_OUTPUT_CLASSES = 10;
@@ -106,14 +107,20 @@ async function train(model, data) {
 } 
 
 // 4. EVALUATE OUR MODEL
-function doPrediction(model, data, testDataSize = 500) {
-    const IMAGE_WIDTH = 28;
-    const IMAGE_HEIGHT = 28;
-    const testData = data.nextTestBatch(testDataSize);
-    const testxs = testData.xs.reshape([testDataSize, IMAGE_WIDTH, IMAGE_HEIGHT, 1]);
-    const labels = testData.labels.argMax(-1);
-    const preds = model.predict(testxs).argMax(-1);
+export function doPrediction(userInput) {
+    var tensor = tf.browser.fromPixels(userInput).resizeNearestNeighbor([28, 28]).mean(2).expandDims(2).expandDims().toFloat();
+    var testxs = tensor.div(255.0);
 
+    // const xs = tf.tensor2d(tensor);
+    // console.log("xs: " + xs);
+
+    // const IMAGE_WIDTH = 28;
+    // const IMAGE_HEIGHT = 28;
+    // const testData = data.nextTestBatch(1);
+    // const testxs = testData.xs.reshape([1, IMAGE_WIDTH, IMAGE_HEIGHT, 1]);
+    var preds = model.predict(testxs).argMax(-1);
+
+    tensor.dispose();
     testxs.dispose();
-    return [preds, labels];
+    return preds.dataSync()[0];
 }

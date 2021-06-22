@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { prepareTheModel } from './tensorflow.handwriting.functions';
+import { prepareTheModel, doPrediction } from './tensorflow.handwriting.functions';
 import Spinner from '../../components/spinner/spinner.component';
 
 import './tensorflow.handwriting.styles.scss';
@@ -11,25 +11,31 @@ class TensorflowHandwriting extends React.Component {
 
     this.state = {
       loading: true,
-      image: undefined,
-      answer: null
+      image: "https://media3.giphy.com/media/26uf2JHNV0Tq3ugkE/200.gif",
+      answer: null,
     }
   }
 
   async componentDidMount() {
-    // await prepareTheModel();
+    await prepareTheModel();
 
     this.setState({ loading: false });
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
+
+    var img = new Image();
+    img.src = this.state.image;
+
+    this.setState({ answer: doPrediction(img) });
   }
 
-  handleImageChange = (event) => {
-
-    if(event.target.files && event.target.files[0]) {
-      this.setState({ image: URL.createObjectURL(event.target.files[0]) })
+  handleChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      this.setState({
+        image: URL.createObjectURL(event.target.files[0])
+      });
     }
   }
 
@@ -40,17 +46,12 @@ class TensorflowHandwriting extends React.Component {
 
     return (
         <div className="tensorflowhandwriting">
-          <h1>Tensorflow Handwriting</h1>
+          <h1 className="canvas-heading">Digit Recognizer using TensorFlow.js Demo</h1>
           <h1 className="prediction">Prediction: {this.state.answer}</h1>
-          <img className="image" src={this.state.image} alt="Image Will Be Displayed Here" />
+          <img className="image" src={this.state.image} alt="" />
           <form className="form" onSubmit={this.handleSubmit}>
-            <input 
-              className="input" 
-              name="file" 
-              onChange={this.handleImageChange} 
-              type="file" 
-            />
-            <button className="button">Submit</button>
+            <input className="input" onChange={this.handleChange} type="file" />
+            <button className="button" type="submit"><h3>Submit</h3></button>
           </form>
         </div>
     )
